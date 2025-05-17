@@ -1,0 +1,77 @@
+pitch:
+  # Path to the pitch template image with drawn lines, used for visualization of the players on the pitch.
+  template: "dataset/pitch/soccer_pitch.png"
+  # Width of the pitch in meters.
+  width: 105
+  # Height of the pitch in meters.
+  height: 68
+  # Length of the area behind goals which is planar in meters. The stadium planes behind the goals
+  # are considered to stand at `width` + `width_behind` distance in x dimension from the center.
+  width_behind: 5
+  # Length of the area behind side lines which is planar in meters. The stadium planes behind the sidelines
+  # are considered to stand at `height` + `height_behind` distance in y dimension from the center.
+  height_behind: 4
+  # How much longer and wider in both sides to consider the pitch during generation, in meters.
+  # This helps avoid small missing areas on the connections between the pitch and the stadium planes.
+  padding: 0.1
+  # How much to scale the pitch texture image relative to the input image size.
+  texture_scale: 1
+
+
+goal:
+  # Width of the goal in meters.
+  width: 8.05
+  # Height of the goal in meters.
+  height: 2.68
+  # Depth of the goal in meters, i.e. how far the goal net is from the goal line.
+  depth: 2.5
+  # How much to scale the goal texture images relative to the input image size.
+  texture_scale: 0.2
+
+stadium:
+  # Height of the stadium planes in meters.
+  height: 25
+  # How much to scale the stadium texture images relative to the input image size.
+  texture_scale: 1
+
+billboards:
+  # Dimensions of the player billboards in meters.
+  player:
+    width: 2
+    height: 2
+  # Dimensions of the ball billboard in meters.
+  ball:
+    width: 0.5
+    height: 0.5
+
+segmentation:
+  # Whether to use YOLO for player segmentation. If false, the player segmentation is assumed to be provided.
+  use_yolo: False
+  # Path to the YOLO model file for player segmentation. If the model is not found, it will be downloaded.
+  # Supported models: yolo11n-seg.pt yolo11s-seg.pt yolo11m-seg.pt yolo11l-seg.pt yolo11x-seg.pt
+  model: "yolo11x-seg.pt"
+  # Keyword arguments for the YOLO model.
+  # See https://docs.ultralytics.com/modes/predict/#inference-arguments for details.
+  kwargs:
+    conf: 0.5
+    verbose: False
+
+rendering:
+  # Maximum distance in meters for two players which can be considered as the same player.
+  max_player_distance: 5
+  # Whether to blend player textures from multiple frames during the transition.
+  # If false, the selected texture is used with no blending.
+  blend_players: True
+  # Whether to consider the ball like part of the background, and rendered in the same style as the pitch.
+  # If false, it's instead rendered as a billboard similar to player rendering.
+  # Note that in that case it's assumed that it is in contact with the pitch (Z=0), which may cause artifacts.
+  treat_ball_as_background: True
+  # Maximum allowed angle in degrees between camera direction and plane center to classify
+  # the camera as facing the plane and render it.
+  max_camera_plane_angle: 112.5
+  # Whether to inpaint areas of the rendered image which could not be texturized from the input frames.
+  inpaint_missing_background: True
+  # Type of rotation interpolation to use. Options: linear / spherical / toward_focus_point.
+  rotation_interpolation: "toward_focus_point"
+  # Exponent of the time step function
+  time_step_exponent: 2

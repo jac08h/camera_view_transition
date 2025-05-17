@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=62.6", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "camera_view_transition"
+version = "0.1.0"
+description = "A package to create transitions between camera views."
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[tool.setuptools]
+packages = ["camera_view_transition", "scripts"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements.txt"}
+
+[project.scripts]
+generate-single-image = "scripts.generate_single_image:main"
+generate-transition = "scripts.generate_transition:main"

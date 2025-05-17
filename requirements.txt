@@ -1,0 +1,9 @@
+gdown
+lxml
+numpy
+opencv-python
+pyyaml
+pytest
+scipy
+tqdm
+ultralytics
